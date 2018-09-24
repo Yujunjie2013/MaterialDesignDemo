@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">MaterialDesignDemo</string>
+    <string name="app_info">CoordinatorLayout 可以协调子View，而这些子View 的具体响应动作是通过 behavior 来指定的。如果你有特定的需求，你就需要自己定义一个特定的 Behavior,Google 也给我们定义了一些常用的Behavior，如后面要用的到的 appbar_scrolling_view_behavior ，用于协调 AppbarLayout 与 ScrollView 滑动的Behavior，如下：
+
+通过 layout_behavior 属性来指定 Behavior。本篇文章不会过多的去介绍Behavior,后面会单独拿出来介绍，我们只要知道CoordinatorLayout 的作用就行了，可以通过Behavior 协调子View 。在网上也看到了一篇不错的专门介绍CoordinatorLayout 的文章,CoordinatorLayout的使用如此简单,需要的可以去了解一下。
+
+2,AppbarLayout 的使用
+AppbarLayout继承自LinearLayout,它就是一个垂直方向的LinearLayout,在LinearLayout的基础上添加了一些材料设计的概念和特性，即滑动手势。它可以让你定制在某个可滑动的View（如：ScrollView ,ListView ,RecyclerView 等）滑动手势发生改变时，内部的子View 该做什么动作。子View应该提供滑动时他们期望的响应的动作Behavior,通过setScrollFlags(int)，或者xml 中使用属性：
+
+app:layout_scrollFlags
+注意：AppbarLayout 严重依赖于CoordinatorLayout，必须用于CoordinatorLayout 的直接子View，如果你将AppbarLayout 放在其他的ViewGroup 里面，那么它的这些功能是无效的。
+
+2.1 AppbarLayout 子View 的几种动作
+上面说了 AppbarLayout 可以定制当某个可滑动的View滑动手势改变时内部子View的动作，通过app:layout_scrollFlags来指定，那么现在我们就看一下layout_scrollFlags有哪几种动作。layout_scrollFlags有5种动作，分别是 scroll,enterAlways,enterAlwaysCollapsed,exitUntilCollapsed,snap。我们来分别看一下这五种动作的含义和效果。
+1,** scroll **,子View 添加layout_scrollFlags属性 的值scroll 时，这个View将会随着可滚动View（如：ScrollView,以下都会用ScrollView 来代替可滚动的View ）一起滚动，就好像子View 是属于ScrollView的一部分
+
+2,** enterAlways **,子View 添加layout_scrollFlags属性 的值有enterAlways 时, 当ScrollView 向下滑动时，子View 将直接向下滑动，而不管ScrollView 是否在滑动。注意：要与scroll 搭配使用，否者是不能滑动的。
+代码如下：
+
+3,** enterAlwaysCollapsed **, enterAlwaysCollapsed 是对enterAlways 的补充，当ScrollView 向下滑动的时候，滑动View（也就是设置了enterAlwaysCollapsed 的View）下滑至折叠的高度，当ScrollView 到达滑动范围的结束值的时候，滑动View剩下的部分开始滑动。这个折叠的高度是通过View的minimum height （最小高度）指定的。
+
+4,exitUntilCollapsed, 当ScrollView 滑出屏幕时（也就时向上滑动时），滑动View先响应滑动事件，滑动至折叠高度，也就是通过minimum height 设置的最小高度后，就固定不动了，再把滑动事件交给 scrollview 继续滑动。
+        5,** snap**,意思是：在滚动结束后，如果view只是部分可见，它将滑动到最近的边界。比如，如果view的底部只有25%可见，它将滚动离开屏幕，而如果底部有75%可见，它将滚动到完全显示。
+</string>
+</resources>
